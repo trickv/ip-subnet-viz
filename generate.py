@@ -3,7 +3,15 @@
 from PIL import Image
 from netaddr import IPNetwork
 
-network = IPNetwork('192.168.0.0/16')
+import sys
+
+network = IPNetwork(sys.argv[1])
+allocations = []
+for allocation in sys.argv[2].split(','):
+    allocations.append(IPNetwork(allocation))
+output_file = sys.argv[3]
+
+"""network = IPNetwork('192.168.0.0/16')
 allocations = (
     IPNetwork('192.168.1.0/24'),
     IPNetwork('192.168.4.0/24'),
@@ -20,6 +28,7 @@ allocations = (
     IPNetwork('172.16.32.0/20'), # BOM
     IPNetwork('172.16.48.0/20'), # SYD
     )
+"""
 
 width = 256
 height = network.size / width
@@ -47,4 +56,4 @@ for ip in network:
 
 
 
-image.save("output.png")
+image.save(output_file)
